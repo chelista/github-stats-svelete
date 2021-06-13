@@ -4,19 +4,39 @@
 
     export let refresh;
 
-    let lastResults;
     let users = [];
+    let _prev = []
 
-    const refreshData = () => {
-        users = axios.get(API_QUERY_USERS)
-            .then(res => res.data.items)
+    const refreshData = async () => {
+         await axios.get(API_QUERY_USERS)
+            .then(async res => {
+                const _users = res.data.items
+
+                await axios.get(_users[0].url).then(res => {
+                    _users[0].followers = res.data.followers;
+                })
+
+                await axios.get(_users[1].url).then(res => {
+                    _users[1].followers = res.data.followers;
+                })
+
+                await axios.get(_users[2].url).then(res => {
+                    _users[2].followers = res.data.followers;
+                })
+
+                await axios.get(_users[3].url).then(res => {
+                    _users[3].followers = res.data.followers;
+                })
+
+                await axios.get(_users[4].url).then(res => {
+                    _users[4].followers = res.data.followers;
+                })
+
+                users = _users
+            })
             .catch(() => {
-                users = lastResults;
+                console.log('Failed to retrieve items');
             });
-
-        if (users) {
-            lastResults = users;
-        }
     }
 
     /**
@@ -46,17 +66,13 @@
     </thead>
 
     <tbody>
-        {#await users}
-            <p>Loading...</p>
-        {:then users}
-            {#each users as user}
-                <tr>
-                    <td>{user.id}</td>
-                    <td>{user.login}</td>
-                    <td><img src={user.avatar_url} alt="User Avatar" width={AVATAR_IMAGE_WIDTH}/></td>
-                    <td>N/A</td>
-                </tr>
-            {/each}
-        {/await}
+        {#each users as user}
+            <tr>
+                <td>{user.id}</td>
+                <td>{user.login}</td>
+                <td><img src={user.avatar_url} alt="User Avatar" width={AVATAR_IMAGE_WIDTH}/></td>
+                <td>{user.followers ? user.followers.toLocaleString("en-US") : '-'}</td>
+            </tr>
+        {/each}
     </tbody>
 </table>
