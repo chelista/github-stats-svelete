@@ -1,9 +1,29 @@
 <script>
     import axios from 'axios'
-    import {API_QUERY_REPOS} from "../config/const";
+    import {API_QUERY_REPOS, REFRESH_INTERVAL} from "../config/const";
 
-    let repos = axios.get(API_QUERY_REPOS)
-        .then(res => res.data.items);
+    export let refresh;
+
+    let lastResults;
+    let repos = [];
+
+    const refreshData = () => {
+        repos = axios.get(API_QUERY_REPOS)
+            .then(res => res.data.items)
+            .catch(() => {
+                console.log('Unable to fetch repository data');
+            });
+    }
+
+    let interval = null;
+    const refreshStart = () => {
+        if (refresh) {
+            refreshData();
+            interval = setInterval(refreshData, REFRESH_INTERVAL);
+        }
+    }
+
+    $: refresh ? refreshStart() : clearInterval(interval)
 </script>
 
 <table>

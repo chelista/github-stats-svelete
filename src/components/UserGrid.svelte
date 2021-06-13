@@ -1,9 +1,33 @@
 <script>
     import axios from 'axios'
-    import {API_QUERY_USERS, AVATAR_IMAGE_WIDTH} from "../config/const";
+    import {API_QUERY_USERS, REFRESH_INTERVAL, AVATAR_IMAGE_WIDTH} from "../config/const";
 
-    let users = axios.get(API_QUERY_USERS)
-        .then(res => res.data.items);
+    export let refresh;
+
+    let lastResults;
+    let users = [];
+
+    const refreshData = () => {
+        users = axios.get(API_QUERY_USERS)
+            .then(res => res.data.items)
+            .catch(() => {
+                users = lastResults;
+            });
+
+        if (users) {
+            lastResults = users;
+        }
+    }
+
+    let interval = null;
+    const refreshStart = () => {
+        if (refresh) {
+            refreshData();
+            interval = setInterval(refreshData, REFRESH_INTERVAL);
+        }
+    }
+
+    $: refresh ? refreshStart() : clearInterval(interval)
 </script>
 
 <table>
