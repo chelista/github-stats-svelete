@@ -36,4 +36,4 @@ export const REFRESH_INTERVAL = 120000;
 /**
  * To restrict the size of the user avatar
  */
-export const AVATAR_IMAGE_WIDTH = 48;
+export const AVATAR_IMAGE_WIDTH = 24;

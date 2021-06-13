@@ -30,7 +30,7 @@
     $: refresh ? refreshStart() : clearInterval(interval)
 </script>
 
-<table>
+<table class="striped">
     <thead>
     <tr>
         <th>ID</th>
