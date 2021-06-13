@@ -8,8 +8,8 @@
     let repos = [];
 
     const refreshData = () => {
-        repos = axios.get(API_QUERY_REPOS)
-            .then(res => res.data.items)
+        axios.get(API_QUERY_REPOS)
+            .then(res => repos = res.data.items)
             .catch(() => {
                 console.log('Unable to fetch repository data');
             });
@@ -22,6 +22,11 @@
             interval = setInterval(refreshData, REFRESH_INTERVAL);
         }
     }
+
+    /**
+     * To fetch the data on component entry.
+     */
+    refreshData()
 
     $: refresh ? refreshStart() : clearInterval(interval)
 </script>
@@ -44,8 +49,8 @@
                 <tr>
                     <td>{repo.id}</td>
                     <td>{repo.name}</td>
-                    <td>{repo.watchers_count}</td>
-                    <td>{repo.description}</td>
+                    <td>{repo.watchers_count.toLocaleString("en-US")}</td>
+                    <td>{repo.description || 'No Description'}</td>
                 </tr>
             {/each}
         {/await}

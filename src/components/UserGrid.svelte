@@ -19,6 +19,11 @@
         }
     }
 
+    /**
+     * To fetch the data on component entry.
+     */
+    refreshData()
+
     let interval = null;
     const refreshStart = () => {
         if (refresh) {
