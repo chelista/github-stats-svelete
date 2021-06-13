@@ -47,7 +47,6 @@
     let interval = null;
     const refreshStart = () => {
         if (refresh) {
-            refreshData();
             interval = setInterval(refreshData, REFRESH_INTERVAL);
         }
     }
