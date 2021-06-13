@@ -13,27 +13,27 @@ const zeroPad = value => {
 }
 
 /**
- * To get the last month in ISO8601 format
- *
- * @return {string}
- */
-const getLastMonth = () => {
-    var d = new Date();
-    d.setMonth(d.getMonth() - 1);
-    return  d.getFullYear() + '-' + zeroPad(d.getMonth()) + '-' + zeroPad(d.getDay());
-}
-
-/**
  * To get the last year in ISO8601 format
  * @return {string}
  */
 const getLastYear = () => {
     var d = new Date();
     d.setFullYear(d.getFullYear() - 1);
-    return  d.getFullYear() + '-' + zeroPad(d.getMonth()) + '-' + zeroPad(d.getDay());
+    return  d.getFullYear() + '-' + zeroPad(d.getMonth() + 1) + '-' + zeroPad(d.getDate());
+}
+
+/**
+ * To get the last month in ISO8601 format
+ *
+ * @return {string}
+ */
+const getLastMonth = () => {
+    var d = new Date();
+    d.setMonth(d.getMonth());
+    return  d.getFullYear() + '-' + zeroPad(d.getMonth()) + '-' + zeroPad(d.getDate());
 }
 
 export {
-    getLastMonth,
-    getLastYear
+    getLastYear,
+    getLastMonth
 }

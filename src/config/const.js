@@ -12,8 +12,8 @@ export const API_ENDPOINT_BASE = 'https://api.github.com/search'
  * only limiting the top 5 records.
  */
 export const API_QUERY_REPOS = API_ENDPOINT_BASE
-    + '/repositories?sort=stars&order=desc&per_page=5&q=created:'
-    + getLastYear();
+    + '/repositories?sort=stars&order=desc&per_page=5&q=created:>'
+    + getLastMonth();
 
 /**
  * To retrieve the top 5 users followers during the last month.
@@ -26,7 +26,7 @@ export const API_QUERY_REPOS = API_ENDPOINT_BASE
  */
 export const API_QUERY_USERS = API_ENDPOINT_BASE
     + '/users?sort=followers&order=desc&per_page=5&q=created:>'
-    + getLastMonth();
+    + getLastYear();
 
 /**
  * To refresh the information every 2 minutes
