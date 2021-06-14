@@ -86,7 +86,7 @@
         {#each users as user}
             <tr>
                 <td>{user.id}</td>
-                <td>{user.login}</td>
+                <td><a href={user.html_url} target={user.login}>{user.login}</a></td>
                 <td class="user-avatar">
                     <img src={user.avatar_url} alt="User Avatar"/>
                 </td>
