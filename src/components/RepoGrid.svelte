@@ -57,29 +57,33 @@
 </script>
 
 <TableContainer>
-    <table class="striped">s
+    <table class="striped">
         <thead>
-        <tr>
-            <th>ID</th>
-            <th>Name</th>
-            <th>Stars</th>
-            <th>Description</th>
-        </tr>
+            <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Stars</th>
+                <th>Description</th>
+            </tr>
         </thead>
 
         <tbody>
-            {#await repos}
-                <p>Loading...</p>
-            {:then repos}
-                {#each repos as repo}
-                    <tr>
-                        <td>{repo.id}</td>
-                        <td><a href={repo.html_url} target={repo.name}>{repo.name}</a></td>
-                        <td>{repo.watchers_count.toLocaleString("en-US")}</td>
-                        <td>{repo.description || 'No Description'}</td>
-                    </tr>
-                {/each}
-            {/await}
+            {#each repos as repo}
+                <tr>
+                    <td>{repo.id}</td>
+                    <td class="repo-name">
+                        <a href={repo.html_url} target={repo.name}>{repo.name}</a>
+                    </td>
+                    <td>{repo.watchers_count.toLocaleString("en-US")}</td>
+                    <td>{repo.description || 'No Description'}</td>
+                </tr>
+            {/each}
         </tbody>
     </table>
 </TableContainer>
+
+<style>
+    .repo-name {
+        white-space: nowrap;
+    }
+</style>

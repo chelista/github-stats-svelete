@@ -77,12 +77,12 @@
 <TableContainer>
     <table class="striped">
         <thead>
-        <tr>
-            <th>ID</th>
-            <th>Login</th>
-            <th>Avatar Image</th>
-            <th>Followers</th>
-        </tr>
+            <tr>
+                <th>ID</th>
+                <th>Login</th>
+                <th>Avatar Image</th>
+                <th>Followers</th>
+            </tr>
         </thead>
 
         <tbody>
