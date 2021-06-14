@@ -1,6 +1,6 @@
 <script>
     import axios from 'axios'
-    import {API_QUERY_USERS, REFRESH_INTERVAL, AVATAR_IMAGE_WIDTH, NUM_ITEMS} from "../config/const";
+    import {API_QUERY_USERS, REFRESH_INTERVAL, NUM_ITEMS} from "../config/const";
     import {canLoadData, loadData, storeData} from "../helpers/data";
 
     export let refresh;
@@ -87,11 +87,33 @@
             <tr>
                 <td>{user.id}</td>
                 <td>{user.login}</td>
-                <td><img src={user.avatar_url} alt="User Avatar" width={AVATAR_IMAGE_WIDTH}/></td>
+                <td class="user-avatar">
+                    <img src={user.avatar_url} alt="User Avatar"/>
+                </td>
                 <td>{user.followers ? user.followers.toLocaleString("en-US") : '-'}</td>
             </tr>
         {/each}
     </tbody>
 </table>
 
+<style>
+    .user-avatar {
+        padding: 0 0 0 2em;
+    }
+
+    .user-avatar img {
+        width: 32px;
+    }
+
+    .user-avatar img:hover {
+        position: absolute;
+        width: 96px;
+        margin-top: -48px;
+        margin-left: -32px;
+        height: auto;
+        display: block;
+        z-index: 1;
+        cursor: pointer;
+    }
+</style>
 
