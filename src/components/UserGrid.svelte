@@ -3,6 +3,7 @@
     import {API_QUERY_USERS, REFRESH_INTERVAL, NUM_ITEMS} from "../config/const";
     import {canLoadData, loadData, storeData} from "../helpers/data";
     import TableContainer from '../components/TableContainer.svelte';
+    import UserAvatar from '../components/UserAvatar.svelte';
 
     export let refresh;
 
@@ -90,7 +91,7 @@
                     <td>{user.id}</td>
                     <td><a href={user.html_url} target={user.login}>{user.login}</a></td>
                     <td class="user-avatar">
-                        <img src={user.avatar_url} alt="User Avatar"/>
+                        <UserAvatar src={user.avatar_url} />
                     </td>
                     <td>{user.followers ? user.followers.toLocaleString("en-US") : '-'}</td>
                 </tr>
@@ -103,20 +104,4 @@
     .user-avatar {
         padding: 0 0 0 2em;
     }
-
-    .user-avatar img {
-        width: 32px;
-    }
-
-    .user-avatar img:hover {
-        position: absolute;
-        width: 96px;
-        margin-top: -48px;
-        margin-left: -32px;
-        height: auto;
-        display: block;
-        z-index: 1;
-        cursor: pointer;
-    }
 </style>
-
