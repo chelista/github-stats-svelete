@@ -2,6 +2,7 @@
     import axios from 'axios'
     import {API_QUERY_USERS, REFRESH_INTERVAL, NUM_ITEMS} from "../config/const";
     import {canLoadData, loadData, storeData} from "../helpers/data";
+    import TableContainer from '../components/TableContainer.svelte';
 
     export let refresh;
 
@@ -72,29 +73,31 @@
     $: refresh ? refreshStart() : clearInterval(interval)
 </script>
 
-<table class="striped">
-    <thead>
-    <tr>
-        <th>ID</th>
-        <th>Login</th>
-        <th>Avatar Image</th>
-        <th>Followers</th>
-    </tr>
-    </thead>
+<TableContainer>
+    <table class="striped">
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>Login</th>
+            <th>Avatar Image</th>
+            <th>Followers</th>
+        </tr>
+        </thead>
 
-    <tbody>
-        {#each users as user}
-            <tr>
-                <td>{user.id}</td>
-                <td><a href={user.html_url} target={user.login}>{user.login}</a></td>
-                <td class="user-avatar">
-                    <img src={user.avatar_url} alt="User Avatar"/>
-                </td>
-                <td>{user.followers ? user.followers.toLocaleString("en-US") : '-'}</td>
-            </tr>
-        {/each}
-    </tbody>
-</table>
+        <tbody>
+            {#each users as user}
+                <tr>
+                    <td>{user.id}</td>
+                    <td><a href={user.html_url} target={user.login}>{user.login}</a></td>
+                    <td class="user-avatar">
+                        <img src={user.avatar_url} alt="User Avatar"/>
+                    </td>
+                    <td>{user.followers ? user.followers.toLocaleString("en-US") : '-'}</td>
+                </tr>
+            {/each}
+        </tbody>
+    </table>
+</TableContainer>
 
 <style>
     .user-avatar {

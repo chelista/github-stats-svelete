@@ -2,6 +2,7 @@
     import axios from 'axios'
     import {API_QUERY_REPOS, REFRESH_INTERVAL, NUM_ITEMS} from "../config/const";
     import {storeData, loadData, canLoadData} from '../helpers/data';
+    import TableContainer from '../components/TableContainer.svelte';
 
     /**
      * Expose variable to receive signal from the switch widget.
@@ -55,28 +56,30 @@
     $: refresh ? refreshStart() : clearInterval(interval)
 </script>
 
-<table class="striped">
-    <thead>
-    <tr>
-        <th>ID</th>
-        <th>Name</th>
-        <th>Stars</th>
-        <th>Description</th>
-    </tr>
-    </thead>
+<TableContainer>
+    <table class="striped">s
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Stars</th>
+            <th>Description</th>
+        </tr>
+        </thead>
 
-    <tbody>
-        {#await repos}
-            <p>Loading...</p>
-        {:then repos}
-            {#each repos as repo}
-                <tr>
-                    <td>{repo.id}</td>
-                    <td>{repo.name}</td>
-                    <td>{repo.watchers_count.toLocaleString("en-US")}</td>
-                    <td>{repo.description || 'No Description'}</td>
-                </tr>
-            {/each}
-        {/await}
-    </tbody>
-</table>
+        <tbody>
+            {#await repos}
+                <p>Loading...</p>
+            {:then repos}
+                {#each repos as repo}
+                    <tr>
+                        <td>{repo.id}</td>
+                        <td><a href={repo.html_url} target={repo.name}>{repo.name}</a></td>
+                        <td>{repo.watchers_count.toLocaleString("en-US")}</td>
+                        <td>{repo.description || 'No Description'}</td>
+                    </tr>
+                {/each}
+            {/await}
+        </tbody>
+    </table>
+</TableContainer>
