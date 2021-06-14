@@ -1,5 +1,7 @@
 import {getLastMonth, getLastYear} from '../helpers/date';
 
+export const NUM_ITEMS = 5;
+
 /**
  * GitHub API search base
  */
@@ -12,7 +14,7 @@ export const API_ENDPOINT_BASE = 'https://api.github.com/search'
  * only limiting the top 5 records.
  */
 export const API_QUERY_REPOS = API_ENDPOINT_BASE
-    + '/repositories?sort=stars&order=desc&per_page=5&q=created:>'
+    + '/repositories?sort=stars&order=desc&per_page=' + NUM_ITEMS + '&q=created:>'
     + getLastMonth();
 
 /**
@@ -25,7 +27,7 @@ export const API_QUERY_REPOS = API_ENDPOINT_BASE
  * the URL of the user where the information can be retrieved.
  */
 export const API_QUERY_USERS = API_ENDPOINT_BASE
-    + '/users?sort=followers&order=desc&per_page=5&q=created:>'
+    + '/users?sort=followers&order=desc&per_page=' + NUM_ITEMS + '&q=created:>'
     + getLastYear();
 
 /**
@@ -42,3 +44,4 @@ export const INTERVAL_MINUTES = 2;
  * To restrict the size of the user avatar
  */
 export const AVATAR_IMAGE_WIDTH = 24;
+
