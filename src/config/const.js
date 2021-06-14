@@ -34,6 +34,11 @@ export const API_QUERY_USERS = API_ENDPOINT_BASE
 export const REFRESH_INTERVAL = 120000;
 
 /**
+ * To set the TTL of the API query time.
+ */
+export const INTERVAL_MINUTES = 2;
+
+/**
  * To restrict the size of the user avatar
  */
 export const AVATAR_IMAGE_WIDTH = 24;
