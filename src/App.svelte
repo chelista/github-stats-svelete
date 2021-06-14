@@ -19,7 +19,7 @@ const handleUserSwitch = e => {
 
 	<TitleWithSwitch on:switch={handleRepoSwitch}>
 		<h2>Top 5 Repositories
-			<span>with most stars since {getLastMonth()}</span>
+			<span>(with most stars since {getLastMonth()})</span>
 		</h2>
 	</TitleWithSwitch>
 	<RepoGrid refresh={repoRefresh}/>

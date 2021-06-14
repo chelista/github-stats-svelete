@@ -1,18 +1,43 @@
 <script>
     import axios from 'axios'
-    import {API_QUERY_REPOS, REFRESH_INTERVAL} from "../config/const";
+    import {API_QUERY_REPOS, REFRESH_INTERVAL, NUM_ITEMS} from "../config/const";
+    import {storeData, loadData, canLoadData} from '../helpers/data';
 
+    /**
+     * Expose variable to receive signal from the switch widget.
+     */
     export let refresh;
 
-    let lastResults;
     let repos = [];
 
+    /**
+     * To conditionally refresh the repository data.
+     */
     const refreshData = () => {
-        axios.get(API_QUERY_REPOS)
-            .then(res => repos = res.data.items)
-            .catch(() => {
-                console.log('Unable to fetch repository data');
-            });
+
+        if (canLoadData('repos')) {
+            axios.get(API_QUERY_REPOS)
+                .then(res => {
+                    repos = res.data.items
+                    storeData('repos', repos);
+                })
+                .catch(() => {
+                    console.log('Unable to fetch repository data');
+
+                    let _repos = loadData('repos', NUM_ITEMS);
+                    if (_repos) {
+                        console.log('Using repos from local storage');
+                        repos = _repos
+                    }
+                });
+        } else {
+            // Attempt to retrieve the the last successful request
+            let _repos = loadData('repos', NUM_ITEMS);
+            if (_repos) {
+                console.log('Using repos from local storage');
+                repos = _repos
+            }
+        }
     }
 
     let interval = null;

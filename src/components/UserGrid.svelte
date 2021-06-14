@@ -1,6 +1,7 @@
 <script>
     import axios from 'axios'
-    import {API_QUERY_USERS, REFRESH_INTERVAL, AVATAR_IMAGE_WIDTH} from "../config/const";
+    import {API_QUERY_USERS, REFRESH_INTERVAL, AVATAR_IMAGE_WIDTH, NUM_ITEMS} from "../config/const";
+    import {canLoadData, loadData, storeData} from "../helpers/data";
 
     export let refresh;
 
@@ -8,35 +9,52 @@
     let _prev = []
 
     const refreshData = async () => {
-         await axios.get(API_QUERY_USERS)
-            .then(async res => {
-                const _users = res.data.items
+        if (canLoadData('users')) {
+            await axios.get(API_QUERY_USERS)
+                .then(async res => {
+                    const _users = res.data.items
 
-                await axios.get(_users[0].url).then(res => {
-                    _users[0].followers = res.data.followers;
+                    await axios.get(_users[0].url).then(res => {
+                        _users[0].followers = res.data.followers;
+                    })
+
+                    await axios.get(_users[1].url).then(res => {
+                        _users[1].followers = res.data.followers;
+                    })
+
+                    await axios.get(_users[2].url).then(res => {
+                        _users[2].followers = res.data.followers;
+                    })
+
+                    await axios.get(_users[3].url).then(res => {
+                        _users[3].followers = res.data.followers;
+                    })
+
+                    await axios.get(_users[4].url).then(res => {
+                        _users[4].followers = res.data.followers;
+                    })
+
+                    users = _users
+                    storeData('users', users);
                 })
+                .catch(() => {
+                    console.log('Unable to fetch user data');
 
-                await axios.get(_users[1].url).then(res => {
-                    _users[1].followers = res.data.followers;
-                })
-
-                await axios.get(_users[2].url).then(res => {
-                    _users[2].followers = res.data.followers;
-                })
-
-                await axios.get(_users[3].url).then(res => {
-                    _users[3].followers = res.data.followers;
-                })
-
-                await axios.get(_users[4].url).then(res => {
-                    _users[4].followers = res.data.followers;
-                })
-
+                    // Attempt to retrieve the the last successful request
+                    let _users = loadData('users', NUM_ITEMS);
+                    if (_users) {
+                        console.log('Using users from local storage');
+                        users = _users
+                    }
+                });
+        } else {
+            // Attempt to retrieve the the last successful request
+            let _users = loadData('users', NUM_ITEMS);
+            if (_users) {
+                console.log('Using users from local storage');
                 users = _users
-            })
-            .catch(() => {
-                console.log('Failed to retrieve items');
-            });
+            }
+        }
     }
 
     /**
@@ -75,3 +93,5 @@
         {/each}
     </tbody>
 </table>
+
+
