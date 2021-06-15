@@ -16,25 +16,11 @@
                 .then(async res => {
                     const _users = res.data.items
 
-                    await axios.get(_users[0].url).then(res => {
-                        _users[0].followers = res.data.followers;
-                    })
-
-                    await axios.get(_users[1].url).then(res => {
-                        _users[1].followers = res.data.followers;
-                    })
-
-                    await axios.get(_users[2].url).then(res => {
-                        _users[2].followers = res.data.followers;
-                    })
-
-                    await axios.get(_users[3].url).then(res => {
-                        _users[3].followers = res.data.followers;
-                    })
-
-                    await axios.get(_users[4].url).then(res => {
-                        _users[4].followers = res.data.followers;
-                    })
+                    for (let i = 0; i < NUM_ITEMS; i++) {
+                        axios.get(_users[i].url).then(res => {
+                            _users[i].followers = res.data.followers;
+                        })
+                    }
 
                     users = _users
                     storeData('users', users);
